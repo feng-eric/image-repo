@@ -5,7 +5,7 @@ This repository is my submission for the Shopify Challenge!
 # Project Features
 - User authentication 
 - Secure uploading and storing images to AWS S3
-- Viewing own images
+- Viewing own (public + private) images
 - Viewing public images
 - Viewing images by category
 - Viewing specific images
