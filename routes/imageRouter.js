@@ -16,10 +16,10 @@ router.get('/search', images.searchImages);
 router.get('/me', authenticateJWT, images.getUserImages);
 
 // Get image by id
-router.get('/:id', authenticateJWT, images.getImageDetails);
+router.get('/:id', images.getImageDetails);
 
 // Get image by category
-router.get('/category/:category', authenticateJWT, images.getImageByCategory);
+router.get('/category/:category', images.getImageByCategory);
 
 // Upload image
 router.post('/', authenticateJWT, upload.single('image'), images.uploadImage);
