@@ -24,6 +24,10 @@ const ImageSchema = new Schema(
             required: true,
             index: { unique: true }
         },
+        is_private: {
+            type: Boolean,
+            default: false
+        }
     },
     {
         // createdAt,updatedAt fields are automatically added into records

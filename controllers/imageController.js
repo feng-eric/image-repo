@@ -3,7 +3,7 @@ const Image = require('../models/Image');
 
 // Get all public images
 exports.getAllPublicImages = (req, res) => {
-    Image.find({}, (err, images) => {
+    Image.find({is_private : false}, (err, images) => {
         if (err)
             return res.status(400).json({error: 'Error retrieving images'})
 
@@ -18,7 +18,7 @@ exports.getAllPublicImages = (req, res) => {
 exports.searchImages = (req, res) => {
     const filter = new RegExp(req.query.filter, 'i');
     
-    Image.find({ $or:[{name: filter}, {categories: filter}]}, (err, data) => {
+    Image.find({is_private: false, $or:[{name: filter}, {categories: filter}]}, (err, data) => {
         if (err)
             res.status(400).json({error: 'Error searching images'});
         
@@ -44,6 +44,7 @@ exports.getImageByCategory = (req, res) => {
         res.status(400).json({error: 'Error retrieving images. Please specify category'});
     
     Image.find({
+        is_private: false,
         categories: req.params.category
     }, (err, data) => {
         if (err) 
@@ -73,9 +74,11 @@ exports.getImageDetails = (req, res) => {
 // Upload image
 exports.uploadImage = (req, res) => {
     const image = req.file;
-    const imageName = req.body.imageName;
+    const imageName  = req.body.imageName;
     if (!image || !imageName) 
         return res.status(400).json({error: 'Please include image and imageName'});
+
+    isPrivate = false || req.body.isPrivate;
 
     const user = req.user;
  
@@ -113,7 +116,8 @@ exports.uploadImage = (req, res) => {
                     file_link: s3FileURL + image.originalname,
                     s3_key: params.Key,
                     user_id: user._id,
-                    categories: categories
+                    categories: categories,
+                    is_private: isPrivate
                 }
             },
             {
@@ -134,7 +138,7 @@ exports.uploadImage = (req, res) => {
     });
 };
 
-// Update image details
+// Update image details (Name, Category, Access)
 exports.updateImageDetails = (req, res) => {
     if (!req.params.id)
         return res.status(400).json({error: 'Please specify image id'});
@@ -147,6 +151,10 @@ exports.updateImageDetails = (req, res) => {
 
     if (req.body.categories) {
         updateQuery.categories = req.body.categories.toLowerCase().split(',');
+    }
+
+    if (req.body.isPrivate) {
+        updateQuery.is_private = req.body.isPrivate;
     }
 
     Image.findById(req.params.id, (err, image) => {
