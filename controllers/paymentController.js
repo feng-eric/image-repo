@@ -32,7 +32,8 @@ exports.purchaseImage = (req, res) => {
                 let transaction = new Transaction({
                     price: charge.amount,
                     user_id: req.user._id,
-                    image_id: image._id
+                    image_id: image._id,
+                    receipt: charge.receipt_url
                 });
 
                 transaction.save((err, result) => {
@@ -45,7 +46,10 @@ exports.purchaseImage = (req, res) => {
                         if (err) 
                             return res.status(400).json({error: 'Error purchasing image'});
 
-                        return res.status(200).json({message: `Purchased image with id: ${image._id} successfully for $${result.price}`});
+                        return res.status(200).json({
+                            message: `Purchased image with id: ${image._id} successfully for $${result.price}`,
+                            receipt: charge.receipt_url
+                        });
                     });
                 })
             }

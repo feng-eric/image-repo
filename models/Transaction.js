@@ -12,7 +12,10 @@ const TransactionSchema = new Schema(
         },
         image_id: {
             type: mongoose.Schema.Types.ObjectId
-        }
+        },
+        receipt: { 
+            type: String,
+        },
     },
     {
         // createdAt,updatedAt fields are automatically added into records
