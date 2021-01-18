@@ -29,6 +29,7 @@ Ensure that Node.js is downloaded and have a MongoDB database and AWS S3 bucket 
 - ```POST /users/register``` for registering a user
 - ```POST /users/login``` for logging in a user, returning a JSON Web Token that is used to access protected routes
 - ```POST /images/images``` for uploading the image, which is stored in AWS S3 (protected route)
+- ```PUT /images/images``` for editing image details (name, categories, access)
 - ```GET /images/me``` for retrieving all images owned by the user (protected route)
 - ```GET /images/category/:category``` for retrieving images by on category
 - ```GET /images/search?filter=sunny``` for searching images by image name or categories
