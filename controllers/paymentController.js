@@ -13,11 +13,11 @@ exports.purchaseImage = (req, res) => {
         if (err)
             return res.status(400).json({error: 'Please specify image id'});
 
-        console.log(image)
-        if (image.user_id != req.user._id) 
-            return res.status(403).json({ error: 'You do not own this image'});
+        if (!image.is_available)
+            return res.status(403).json({ error: 'Image is unavailable to be purchased'});
         
-        // charges 
+
+        // creating a charge
         stripe.charges.create(
             {
                 amount: image.price,
