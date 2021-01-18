@@ -22,21 +22,33 @@ The tools used in the project consists of **Node.js** and **Express**, which is 
 Ensure that Node.js is downloaded and have a MongoDB database and AWS S3 bucket set up.
 
 1. Clone the project with ```git clone https://github.com/feng-eric/image-repo.git```
-2. Create a ```.env``` file in the root directory and request the environment variables from me.
+2. Create a ```.env``` file in the root directory and request the following environment variables from me.
+``` 
+MONGO_DB_URL=
+JWT_KEY=
+PORT=
+AWS_BUCKET_NAME=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=
+AWS_UPLOAD_FILE_URL=
+STRIPE_KEY=
+```
 3. Install dependencies for the project using ```npm install```
 4. Start the server using ```npm start```
 
 # Endpoints
 - ```POST /users/register``` for registering a user
 - ```POST /users/login``` for logging in a user, returning a JSON Web Token that is used to access protected routes
-- ```POST /images/images``` for uploading the image, which is stored in AWS S3 (protected route)
-- ```PUT /images/images``` for editing image details (name, categories, access)
+- ```POST /images``` for uploading the image, which is stored in AWS S3 (protected route)
+- ```PUT /images/:id``` for editing image details, including image name, categories, and accessibility (protected route) 
+- ```DELETE /images/:id``` for deleting an image (protected route)
 - ```GET /images/me``` for retrieving all images owned by the user (protected route)
 - ```GET /images/category/:category``` for retrieving images by on category
 - ```GET /images/search?filter=sunny``` for searching images by image name or categories
 - ```GET /images/all``` for retrieving all images that are public
 - ```GET /images/:id``` for retrieving image by id 
-- ```POST /payments``` for purchasing an image
+- ```POST /payments``` for purchasing an image (protected route)
 
 # What's Next
-I want to add the functionality of being able to buy/sell/trade images with other users. Furthermore, adding a like/upvote system on images would be interesting as well!
+I want to add the functionality of being able to buy/sell/trade images with other users. Furthermore, adding the ability to favourite images would be an interesting feature to add too.
