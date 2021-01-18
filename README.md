@@ -13,9 +13,10 @@ This repository is my submission for the Shopify Challenge!
 - Editing image details
 - Deleting images
 - Access control to ensure that only owner can edit or delete images
+- Purchasing images through Stripe
 
 # How I Built It
-The tools used in the project consists of **Node.js** and **Express**, which is connected to **MongoDB**. For image storage, **AWS S3** was levaraged.
+The tools used in the project consists of **Node.js** and **Express**, which is connected to **MongoDB**. For image storage, **AWS S3** was levaraged. **Stripe** was used for image purchases.
 
 # Setup
 Ensure that Node.js is downloaded and have a MongoDB database and AWS S3 bucket set up.
@@ -35,6 +36,7 @@ Ensure that Node.js is downloaded and have a MongoDB database and AWS S3 bucket 
 - ```GET /images/search?filter=sunny``` for searching images by image name or categories
 - ```GET /images/all``` for retrieving all images that are public
 - ```GET /images/:id``` for retrieving image by id 
+- ```POST /payments``` for purchasing an image
 
 # What's Next
 I want to add the functionality of being able to buy/sell/trade images with other users. Furthermore, adding a like/upvote system on images would be interesting as well!
