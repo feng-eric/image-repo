@@ -37,7 +37,6 @@ exports.getUserImages = (req, res) => {
     });
 };
 
-
 // Get image by category
 exports.getImageByCategory = (req, res) => {
     if (!req.params.category) 
@@ -74,11 +73,13 @@ exports.getImageDetails = (req, res) => {
 // Upload image
 exports.uploadImage = (req, res) => {
     const image = req.file;
-    const imageName  = req.body.imageName;
-    if (!image || !imageName) 
-        return res.status(400).json({error: 'Please include image and imageName'});
+    const { imageName, price }  = req.body;
+    if (!image || !imageName || !price) 
+        return res.status(400).json({error: 'Please include image, imageName, and price'});
 
-    isPrivate = false || req.body.isPrivate;
+    const isPrivate = req.body.isPrivate;
+    if (!isPrivate)
+        isPrivate = false;
 
     const user = req.user;
  
@@ -117,7 +118,9 @@ exports.uploadImage = (req, res) => {
                     s3_key: params.Key,
                     user_id: user._id,
                     categories: categories,
-                    is_private: isPrivate
+                    is_private: isPrivate,
+                    is_available: true,
+                    price: price
                 }
             },
             {
@@ -155,6 +158,10 @@ exports.updateImageDetails = (req, res) => {
 
     if (req.body.isPrivate) {
         updateQuery.is_private = req.body.isPrivate;
+    }
+
+    if (req.body.price) {
+        updateQuery.price = req.body.price;
     }
 
     Image.findById(req.params.id, (err, image) => {

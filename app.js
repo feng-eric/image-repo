@@ -15,10 +15,12 @@ app.use(bodyParser.json());
 // Routers
 const userRouter = require('./routes/userRouter');
 const imageRouter = require('./routes/imageRouter');
+const paymentRouter = require('./routes/paymentRouter');
 
 // Use Routers
 app.use('/users', userRouter);
 app.use('/images', imageRouter);
+app.use('/payments', paymentRouter);
 
 app.listen(process.env.PORT, () => {
     console.info(`Server is listening on port ${process.env.PORT}`);

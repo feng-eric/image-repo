@@ -27,6 +27,14 @@ const ImageSchema = new Schema(
         is_private: {
             type: Boolean,
             default: false
+        },
+        is_available: {
+            type: Boolean,
+            default: true
+        },
+        price: {
+            type: Number,
+            required: true
         }
     },
     {
